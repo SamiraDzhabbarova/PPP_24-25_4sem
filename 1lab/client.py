@@ -1,6 +1,5 @@
 import socket
 
-# Функция для добавления программы
 def add_program(program_name, program_code):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('localhost', 12345))  # Подключение к серверу
@@ -12,7 +11,6 @@ def add_program(program_name, program_code):
     print(response)
     client_socket.close()
 
-# Функция для запуска программы
 def run_program(program_name):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('localhost', 12345))
@@ -21,7 +19,6 @@ def run_program(program_name):
     print(response)
     client_socket.close()
 
-# Функция для получения вывода программы
 def get_program_output(program_name):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect(('localhost', 12345))

@@ -75,7 +75,7 @@ def server_main():
     save_programs_info(programs_info)
 
     cycler_thread = Thread(target=run_programs_cyclically, args=(programs_info,))
-    cycler_thread.daemon = True  # Поток завершится при завершении основного потока
+    cycler_thread.daemon = True 
     cycler_thread.start()
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

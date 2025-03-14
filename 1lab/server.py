@@ -15,7 +15,7 @@ def create_program_directory(program_name):
 
 def run_program(program_name):
     output_file = os.path.join(program_name, f"{program_name}_output.txt")
-    command = f"python {program_name}.py > {output_file} 2>&1"  # Запуск Python-скрипта
+    command = f"python {program_name}.py > {output_file} 2>&1" 
     os.system(command)
 def load_programs_info():
     if os.path.exists("programs_info.json"):
@@ -56,10 +56,10 @@ def remove_deleted_programs(programs_info):
 
 def run_programs_cyclically(programs_info):
     while True:
-        programs_info = remove_deleted_programs(programs_info)  # Удаляем удалённые программы
-        save_programs_info(programs_info)  # Сохраняем обновлённый список
+        programs_info = remove_deleted_programs(programs_info)  
+        save_programs_info(programs_info) 
 
-        for program_name in list(programs_info.keys()):  # Используем list для безопасного итерирования
+        for program_name in list(programs_info.keys()):  
             print(f"Запуск программы: {program_name}")
             run_program(program_name)
             programs_info[program_name]["runs"].append(time.strftime("%Y-%m-%d %H:%M:%S"))
@@ -70,11 +70,10 @@ def run_programs_cyclically(programs_info):
 def server_main():
     programs_info = load_programs_info()
 
-    # Сканируем папку на наличие программ
+   
     programs_info = scan_for_programs(programs_info)
     save_programs_info(programs_info)
 
-    # Запуск циклического выполнения программ в отдельном потоке
     cycler_thread = Thread(target=run_programs_cyclically, args=(programs_info,))
     cycler_thread.daemon = True  # Поток завершится при завершении основного потока
     cycler_thread.start()

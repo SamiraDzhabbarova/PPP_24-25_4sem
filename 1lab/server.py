@@ -36,7 +36,7 @@ def is_program_name_valid(program_name):
 def scan_for_programs(programs_info):
     for item in os.listdir():
         if item.endswith(".py") and os.path.isfile(item) and item not in NOT_FILES:
-            program_name = item[:-3]  # Убираем расширение .py
+            program_name = item[:-3]  
             if program_name not in programs_info:
                 programs_info[program_name] = {"runs": []}
                 create_program_directory(program_name)
@@ -79,7 +79,7 @@ def server_main():
     cycler_thread.start()
 
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(('localhost', 12345))  # Сервер слушает на localhost, порт 12345
+    server_socket.bind(('localhost', 12345)) 
     server_socket.listen(5)
     print("Сервер запущен и ожидает подключений...")
 

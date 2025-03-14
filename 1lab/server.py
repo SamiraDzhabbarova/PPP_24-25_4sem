@@ -95,16 +95,14 @@ def server_main():
             elif not is_program_name_valid(program_name):
                 client_socket.send(f"Некорректное имя программы: {program_name}.".encode())
             else:
-                # Запрашиваем код программы у клиента
+                
                 client_socket.send("Ожидание кода программы...".encode())
                 program_code = client_socket.recv(1024).decode()
-
-                # Создаём файл с кодом программы
+               
                 create_program_directory(program_name)
                 with open(f"{program_name}.py", "w") as file:
                     file.write(program_code)
 
-                # Добавляем программу в список
                 programs_info[program_name] = {"runs": []}
                 save_programs_info(programs_info)
                 client_socket.send(f"Программа {program_name} добавлена.".encode())

@@ -66,7 +66,6 @@ def run_programs_cyclically(programs_info):
             save_programs_info(programs_info)
         time.sleep(10)  # Интервал 10 секунд
 
-# Основная функция сервера
 def server_main():
     programs_info = load_programs_info()
 

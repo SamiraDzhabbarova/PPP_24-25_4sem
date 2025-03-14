@@ -32,7 +32,6 @@ def get_program_output(program_name):
     client_socket.close()
     print(f"Вывод программы {program_name} сохранён в файл {program_name}_output.txt")
 
-# Основной цикл клиента
 def client_main():
     while True:
         print("\n1. Добавить программу")

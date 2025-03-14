@@ -5,46 +5,37 @@ import socket
 import sys
 from threading import Thread
 
-# Запрещённые символы в именах программ
-FORBIDDEN_CHARS = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
+FORBIDDEN_SYMBOLS = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
 
-# Файлы, которые не считаются программами
-EXCLUDED_FILES = ["server.py", "client.py"]
+NOT_FILES = ["server.py", "client.py"]
 
-# Создание директории для программы
 def create_program_directory(program_name):
     if not os.path.exists(program_name):
         os.makedirs(program_name)
 
-# Запуск программы и запись вывода в файл
 def run_program(program_name):
     output_file = os.path.join(program_name, f"{program_name}_output.txt")
     command = f"python {program_name}.py > {output_file} 2>&1"  # Запуск Python-скрипта
     os.system(command)
-
-# Загрузка информации о программах из JSON
 def load_programs_info():
     if os.path.exists("programs_info.json"):
         with open("programs_info.json", "r") as file:
             return json.load(file)
     return {}
 
-# Сохранение информации о программах в JSON
 def save_programs_info(programs_info):
     with open("programs_info.json", "w") as file:
         json.dump(programs_info, file, indent=4)
 
-# Проверка имени программы на корректность
 def is_program_name_valid(program_name):
-    for char in FORBIDDEN_CHARS:
-        if char in program_name:
+    for symbol in FORBIDDEN_SYMBOLS:
+        if symbol in program_name:
             return False
     return True
 
-# Сканирование папки на наличие программ
 def scan_for_programs(programs_info):
     for item in os.listdir():
-        if item.endswith(".py") and os.path.isfile(item) and item not in EXCLUDED_FILES:
+        if item.endswith(".py") and os.path.isfile(item) and item not in NOT_FILES:
             program_name = item[:-3]  # Убираем расширение .py
             if program_name not in programs_info:
                 programs_info[program_name] = {"runs": []}
@@ -52,7 +43,6 @@ def scan_for_programs(programs_info):
                 print(f"Найдена программа: {program_name}")
     return programs_info
 
-# Удаление удалённых программ из списка
 def remove_deleted_programs(programs_info):
     programs_to_remove = []
     for program_name in programs_info:
@@ -64,7 +54,6 @@ def remove_deleted_programs(programs_info):
         del programs_info[program_name]
     return programs_info
 
-# Функция для циклического запуска программ
 def run_programs_cyclically(programs_info):
     while True:
         programs_info = remove_deleted_programs(programs_info)  # Удаляем удалённые программы
